@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var BeanstalkWorkerCluster = require('../lib/beanstalk_worker_cluster').BeanstalkWorkerCluster;
 
 process.on('SIGINT', function() {
