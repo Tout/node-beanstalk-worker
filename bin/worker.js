@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-var BeanstalkWorkerCluster = require('../lib/beanstalk_worker_cluster').BeanstalkWorkerCluster;
+var path = require('path'),
+    BeanstalkWorkerCluster = require('../lib/beanstalk_worker_cluster').BeanstalkWorkerCluster;
 
 process.on('SIGINT', function() {
   BeanstalkWorkerCluster.stop();
@@ -19,7 +20,7 @@ var options = {
 
 
 // conf file
-var config_file = process.argv[2];
+var config_file = path.join(process.cwd(), process.argv[2]);
 var config_options = {};
 if(config_file) {
   config_options = require(config_file);
@@ -32,8 +33,9 @@ for(var k in config_options) {
 }
 
 var handlers = [];
+// Need to make the handlers relative to the config files
 for(var i=0; i< options.handlers.length; i++) {
-  handlers.push(require(options.handlers[i]).handlers);
+  handlers.push(require(path.join(path.dirname(config_file), options.handlers[i])).handlers);
 }
 
 BeanstalkWorkerCluster.start(options.server, options.workers, handlers, options.tubes, options.ignore_default);
