@@ -4,6 +4,7 @@
 ,  "bin": { "nbworker" : "bin/worker.js" }
 ,  "description": "library and example script for building workers to handle jobs held in a beanstalkd message queue server"
 , "dependencies" : 
-  { "beanstalk_client" : "0.2.0"
+  { "beanstalk_client" : "0.2.0",
+    "async": "~0.1.15"
   }
 }
